@@ -1,0 +1,28 @@
+version: '2'
+services:
+    liga:
+        build: .
+        environment: 
+            BOT_TOKEN: 1228088328:AAGo7QuhhmPm7McUFmaN7coSO5Oy66xZ29E
+            SOCS_PROXY: 78.46.218.20
+            SOCS_PORT: 41714
+        command: ["node", "src/liga.js"]
+    n_bot:
+        build: .
+        environment: 
+            BOT_TOKEN: '247414626:AAH-o9OdFJnJITL7-bsDejdAPgtaTxxzF-I'
+            SOCS_PROXY: 78.46.218.20
+            SOCS_PORT: 41714
+        command: ["node", "src/liga.js"]
+
+    
+    # database:
+    #     image: postgis/postgis
+    #     environment: 
+    #         POSTGRES_USER: postgres
+    #         POSTGRES_PASSWORD: changeme
+    #     ports:
+    #         - "5432:5432"
+    #     restart: unless-stopped
+    
+
