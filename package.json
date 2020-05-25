@@ -1,0 +1,17 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/liga.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-firebird": "^0.9.0",
+    "socks5-https-client": "^1.2.1",
+    "telegraf": "^3.38.0"
+  }
+}

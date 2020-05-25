@@ -1,2 +1,6 @@
-# hackaton
-Пустой файл
+
+## Dev Env 
+
+```bash
+$ docker-compose up -d
+```
