@@ -1,5 +1,3 @@
-import codecs
-import json
 import logging
 
 from aoiklivereload import LiveReloader
@@ -7,6 +5,8 @@ from settings import Config, DEBUG
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import Updater, CallbackQueryHandler
+
+from services import register_user, search_address
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -16,40 +16,6 @@ logger = logging.getLogger()
 REQUEST_KWARGS = {
     'proxy_url': Config.PROXY
 }
-
-def search_address(msg):
-    with codecs.open('resources/adresses.json', encoding='utf-16') as json_file:
-        data = json.loads(json_file.read())
-        if not msg:
-            return data
-        find_add = [addr for addr in data if msg in addr['address'].lower()]
-        return find_add
-
-
-
-def get_user(telegramm_user_id):
-    with codecs.open('resources/users.json', 'r+', encoding='utf-16') as json_file:
-        users = json.loads(json_file.read())
-        users = [user for user in users if user.get('telegramm_id') == telegramm_user_id]
-        return users[0] if len(users) > 0 else None
-
-def register_user(user):
-    existing_user = get_user(user['telegramm_id'])
-    if not existing_user:
-        existing_user = user
-    existing_user['address'] = user['address']
-
-    with codecs.open('resources/users.json', 'r', encoding='utf-16') as json_file:
-        users = json.loads(json_file.read())
-        if not users:
-            users = []
-        users.append(existing_user)
-
-    with codecs.open('resources/users.json', 'w', encoding='utf-16') as json_file:
-        json_file.write(json.dumps(users))
-
-    return existing_user
-
 
 class DialogBot:
     def __init__(self, token):
