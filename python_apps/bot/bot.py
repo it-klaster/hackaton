@@ -49,8 +49,9 @@ def register_user(user):
 
     with codecs.open('users.json', 'wr', encoding='utf-16') as json_file:
         users = json.loads(json_file.read())
-        users.
-
+        if not users:
+            users = []
+        users.append(existing_user)
         json_file.write(users)
 
 
