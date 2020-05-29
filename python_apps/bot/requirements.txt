@@ -2,3 +2,7 @@ PySocks
 requests==2.20.0
 python-telegram-bot
 AoikLiveReload
+sqlalchemy
+fdb
+firebirdsql
+python-dotenv
