@@ -1,11 +1,10 @@
-FROM node:latest
+FROM python:latest
 
-RUN mkdir -p /app
-WORKDIR /app
+ENV PYTHONPATH=.
 
-COPY package.json ./
+RUN mkdir -p /code
+COPY . /code
+WORKDIR /code
 
-RUN npm install --save-dev
-COPY . /app
-
-
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
