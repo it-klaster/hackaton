@@ -5,6 +5,24 @@ services:
         environment:
           DEBUG: 'True'
           PROXY: 'socks5h://45.77.226.78:3000'
+          DB_URI: "mysql+mysqldb://root:root@db:3306/bot_db?use_unicode=1&charset=utf8mb4"
+        depends_on:
+          - db
         volumes:
           - ./:/code
         command: ["python", "chat_bot/main.py"]
+
+    db:
+        build:
+            context: .
+            dockerfile: Dockerfile-DB
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "32000:3306"
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080

@@ -1,6 +1,13 @@
 
 ## Dev Env 
 
-```bash
+```shell script
 $ docker-compose up -d
+```
+
+## Dump unicode FIX
+
+Чтобы не ругалась алхимия:
+```shell script
+$ sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' ./docker-entrypoint-initdb.d/bot_db.sql
 ```
