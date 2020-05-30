@@ -1,12 +1,18 @@
 import textwrap
 
+from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, UniqueConstraint, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///:memory:', echo=True)
+from settings import Config
+
+
+engine = create_engine(Config.DB_URI, echo=True)
+
+_SessionFactory = sessionmaker(bind=engine)
+session = Session(engine)
 
 Base = declarative_base()
-Base.metadata.create_all(engine)
 
 
 class User(Base):
@@ -24,7 +30,7 @@ class User(Base):
 class Address(Base):
     __tablename__ = 'addresses'
     __table_args__ = (
-        UniqueConstraint('street', 'house')
+        UniqueConstraint('street', 'house'),
     )
 
     id = Column(Integer, primary_key=True)

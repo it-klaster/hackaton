@@ -6,3 +6,5 @@ sqlalchemy
 fdb
 firebirdsql
 python-dotenv
+psycopg2
+mysqlclient

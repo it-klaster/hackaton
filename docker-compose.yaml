@@ -22,18 +22,18 @@ services:
           dockerfile: Dockerfile
         environment:
           PROXY: 'socks5h://54.39.16.26:35385'
+          DB_URI: "mysql+mysqldb://root:root@db:3306/bot_db?use_unicode=1&charset=utf8mb"
+        depends_on:
+          - db
         volumes:
           - ./python_apps/bot:/code
         command: ["python", "bot.py"]
 
     db:
-        image: postgres
-#        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile-DB
         environment:
-            POSTGRES_PASSWORD: example
-
-    adminer:
-        image: adminer
-#        restart: always
+            MYSQL_ROOT_PASSWORD: root
         ports:
-            - 8080:8080
+            - "32000:3306"

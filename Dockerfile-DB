@@ -1,0 +1,5 @@
+FROM mysql:5.7
+
+ENV MYSQL_DATABASE bot_db
+
+COPY ./docker-entrypoint-initdb.d/bot_db.sql /docker-entrypoint-initdb.d/
