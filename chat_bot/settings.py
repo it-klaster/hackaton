@@ -1,6 +1,7 @@
 import os
+from distutils.util import strtobool
 
-DEBUG = bool(os.getenv('DEBUG', False))
+DEBUG = bool(strtobool(os.getenv('DEBUG', False)))
 
 class Config:
     PROXY = os.getenv('PROXY', 'socks5h://78.46.200.216:31847')
