@@ -1,4 +1,5 @@
 import logging
+import time
 
 from aoiklivereload import LiveReloader
 from chat_bot.settings import Config, DEBUG
@@ -7,6 +8,7 @@ from telegram.ext import MessageHandler, Filters
 from telegram.ext import Updater, CallbackQueryHandler
 
 from chat_bot.services import register_user, search_address
+from chat_bot.utils import send_typing_action
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -60,7 +62,7 @@ class DialogBot:
                                      text=f'Ok, запишем: Что будет нового по адресу: {address} сообщить {registered["first_name"]}',
                                      reply_markup=reply_markup)
 
-
+    @send_typing_action
     def handle_message(self, update, context):
         chat_id = update.message.chat_id
         msg = update.message.text
