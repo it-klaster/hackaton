@@ -1,5 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 
+ask_adr_msg = "Здравствуйте, {}! \nЧтобы получать уведомления сервиса 'Умный город',  укажите адрес дома"
+
 class RegistrationView:
 
     def __init__(self, bot):
@@ -18,7 +20,7 @@ class RegistrationView:
         return menu
 
     def ask_adress(self, chat_id, user):
-        answer = f"Здравствуйте, {user.first_name}! \nЧтобы получать уведомления сервиса 'Умный город',  укажите адрес дома"
+        answer = ask_adr_msg.format(user.first_name)
         return self.bot.send_message(chat_id=chat_id, text=answer)
 
 
@@ -31,7 +33,7 @@ class RegistrationView:
                                         text=f'Я знаю слишком много ({count}) адресов, похожих на "{msg}".\nУточните адрес.')
 
     def choose_address(self, chat_id, addresses):
-        button_list = [InlineKeyboardButton(adr['address'], callback_data=adr['address'])
+        button_list = [InlineKeyboardButton(adr.name, callback_data=adr.name)
                        for adr in addresses]
         reply_markup = InlineKeyboardMarkup(self.build_menu(button_list, n_cols=2))
         return self.bot.send_message(chat_id=chat_id, text='Один из этих адресов?',

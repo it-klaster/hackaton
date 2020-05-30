@@ -1,15 +1,16 @@
 import codecs
 import json
 
+from chat_bot.models import session, Event, EventType, EventTimer, Address
+from datetime import datetime
 
-def search_address(msg):
-    with codecs.open('resources/adresses.json', encoding='utf-16') as json_file:
-        data = json.loads(json_file.read())
-        if not msg:
-            return data
-        find_add = [addr for addr in data if msg in addr['address'].lower()]
-        return find_add
+from chat_bot.utils import get_logging
 
+logger = get_logging()
+
+def search_address(msg) -> list:
+    adr = session.query(Address).filter(Address.name.ilike(f'{msg}%')).all()
+    return adr
 
 def get_user(telegramm_user_id):
     with codecs.open('resources/users.json', 'r+', encoding='utf-16') as json_file:
@@ -34,3 +35,14 @@ def register_user(user):
         json_file.write(json.dumps(users))
 
     return existing_user
+
+
+def get_events(adress_id):
+    events = session.query(EventType, Event, EventTimer).filter(
+        EventType.address_id == adress_id
+    ).filter(
+        EventTimer.start_time < datetime.now()
+    ).filter(
+        EventTimer.stop_time > datetime.now()
+    ).all()
+    return [e[0] for e in events]
