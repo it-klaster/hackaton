@@ -6,10 +6,10 @@ from chat_bot.controller.registration_controller import RegistrationController
 from chat_bot.settings import Config, DEBUG
 from chat_bot.utils import get_logging
 
-REQUEST_KWARGS = {
-    'proxy_url': Config.PROXY
-}
+REQUEST_KWARGS = {}
 
+if DEBUG:
+    REQUEST_KWARGS['proxy_url'] = Config.PROXY
 
 class App:
     def __init__(self, token):
