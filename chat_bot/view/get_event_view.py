@@ -14,11 +14,11 @@ class GetEventView(RegistrationView):
         # delete menu
         event_names = [event.name for event in events]
         list = '\n-'.join(event_names)
-        answer = f'Список событий по адресу: {adr}:\n {list}'
+        answer = f'Список событий по адресу: {adr.name}:\n {list}'
         reply_markup = ReplyKeyboardRemove()
         if not list:
             return self.bot.send_message(chat_id=chat_id,
-                                 text=f'Событий по адресу {adr} не найдено.',
+                                 text=f'Событий по адресу {adr.name} не найдено.',
                                  reply_markup=reply_markup)
 
 
