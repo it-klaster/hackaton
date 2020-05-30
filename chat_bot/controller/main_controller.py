@@ -17,7 +17,7 @@ class MainController:
         chat_id = update.message.chat_id
         self.main_view.send_greeting_message(chat_id)
 
-    def register(self, update, context):
+    def process_options(self, update, context):
         pass
 
     def __process_handlers(self):

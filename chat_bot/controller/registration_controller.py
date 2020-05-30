@@ -7,10 +7,11 @@ from chat_bot.view.registration_view import RegistrationView
 
 logger = get_logging()
 
+
 class RegistrationController(MainController):
 
     states_dict = {
-        "FIRST_ASK_ADRESS": 1,
+        "WAIT_INPUT": 1,
         "CHOOSE_OPTIONS": 2,
         "REPEAT": 3,
         "SUCCESS": 4
@@ -24,11 +25,11 @@ class RegistrationController(MainController):
         self.address_options = []
 
     @send_typing_action
-    def ask_adress(self, update, context):
+    def whait_input(self, update, context):
         chat_id = update.message.chat_id
         user = update.message.from_user
         self.view.ask_adress(chat_id, user)
-        return self.states_dict['FIRST_ASK_ADRESS']
+        return self.states_dict['WAIT_INPUT']
 
     @send_typing_action
     def repeat(self, update, context):
@@ -49,8 +50,9 @@ class RegistrationController(MainController):
             self.view.not_found(chat_id, msg)
             return self.states_dict['REPEAT']
 
-        if len(addresses) == 1:
-            return self.register(addresses[0])
+        # TODO: Addd interaction for alone get address
+        # if len(addresses) == 1:
+        #     return self.process_options(addresses[0])
 
         if len(addresses) > 20:
             self.view.too_many_found(chat_id, msg, len(addresses))
@@ -58,11 +60,11 @@ class RegistrationController(MainController):
 
         if len(addresses) <= 20:
             self.view.choose_address(chat_id, addresses)
-            self.address_options = [adr['address'] for adr in addresses]
+            self.address_options = [adr.name for adr in addresses]
             return self.states_dict['CHOOSE_OPTIONS']
 
     @send_typing_action
-    def register(self, update, context):
+    def process_options(self, update, context):
         chat_id = update.effective_chat.id
         adr = update.callback_query.data
         if adr not in self.address_options:
@@ -94,11 +96,11 @@ class RegistrationController(MainController):
 
 
     def __process_handlers(self):
-        conversation_handler = ConversationHandler(entry_points=[MessageHandler(Filters.text('/register'), self.ask_adress)],
+        conversation_handler = ConversationHandler(entry_points=[MessageHandler(Filters.text('/register'), self.whait_input)],
                                                    states={
-                                                       self.states_dict["FIRST_ASK_ADRESS"]: self.default_handlers + [MessageHandler(Filters.text, self.specify_adress)],
+                                                       self.states_dict["WAIT_INPUT"]: self.default_handlers + [MessageHandler(Filters.text, self.specify_adress)],
                                                        self.states_dict["REPEAT"]: self.default_handlers + [MessageHandler(Filters.text, self.repeat)],
-                                                       self.states_dict["CHOOSE_OPTIONS"]: self.default_handlers + [CallbackQueryHandler(self.register)],
+                                                       self.states_dict["CHOOSE_OPTIONS"]: self.default_handlers + [CallbackQueryHandler(self.process_options)],
                                                        self.states_dict["SUCCESS"]: self.default_handlers + [MessageHandler(Filters.text, self.change_adress)]
                                                    }, fallbacks=[], allow_reentry=True)
         self.dispatcher.add_handler(conversation_handler)

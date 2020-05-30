@@ -81,7 +81,7 @@ class DialogBot:
                 return register_user(adresses[0])
 
             if len(adresses) <= 20:
-                button_list = [InlineKeyboardButton(adr['address'], callback_data=adr['address'])
+                button_list = [InlineKeyboardButton(adr.name, callback_data=adr.name)
                                 for adr in adresses]
                 reply_markup = InlineKeyboardMarkup(self.build_menu(button_list, n_cols=2))
                 return context.bot.send_message(chat_id=update.effective_chat.id, text='Один из этих?', reply_markup=reply_markup)

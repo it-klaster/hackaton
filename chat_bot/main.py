@@ -1,6 +1,7 @@
 from aoiklivereload import LiveReloader
 from telegram.ext import Updater
 
+from chat_bot.controller.get_event_controller import GetEventController
 from chat_bot.controller.main_controller import MainController
 from chat_bot.controller.registration_controller import RegistrationController
 from chat_bot.settings import Config, DEBUG
@@ -24,6 +25,7 @@ class App:
             self.dispatcher.add_handler(handler)
 
         registration_controller = RegistrationController(dispatcher=self.dispatcher)
+        get_event_controller = GetEventController(dispatcher=self.dispatcher)
 
     def start(self):
         self.updater.start_polling()
