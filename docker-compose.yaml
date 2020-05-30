@@ -1,33 +1,15 @@
 version: '2'
 services:
-
-#     liga:
-#         build: .
-#         environment:
-#             BOT_TOKEN: 1228088328:AAGo7QuhhmPm7McUFmaN7coSO5Oy66xZ29E
-#             SOCS_PROXY: 78.46.218.20 # https://50na50.net/ru/proxy/socks5list
-#             SOCS_PORT: 41714
-#         command: ["node", "src/liga.js"]
-#     n_bot:
-#         build: .
-#         environment:
-#             BOT_TOKEN: '247414626:AAH-o9OdFJnJITL7-bsDejdAPgtaTxxzF-I'
-#             SOCS_PROXY: 78.46.218.20 # https://50na50.net/ru/proxy/socks5list
-#             SOCS_PORT: 41714
-#         command: ["node", "src/liga.js"]
-
     bot:
-        build:
-          context: python_apps/bot
-          dockerfile: Dockerfile
+        build: .
         environment:
-          PROXY: 'socks5h://54.39.16.26:35385'
+          PROXY: 'socks5h://45.77.226.78:3000'
           DB_URI: "mysql+mysqldb://root:root@db:3306/bot_db?use_unicode=1&charset=utf8mb4"
         depends_on:
           - db
         volumes:
-          - ./python_apps/bot:/code
-        command: ["python", "bot.py"]
+          - ./:/code
+        command: ["python", "chat_bot/main_bot.py"]
 
     db:
         build:

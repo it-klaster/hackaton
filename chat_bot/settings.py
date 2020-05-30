@@ -1,6 +1,6 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
+
+DEBUG = bool(os.getenv('DEBUG', False))
 
 class Config:
     PROXY = os.getenv('PROXY', 'socks5h://78.46.200.216:31847')
