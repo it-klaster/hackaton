@@ -77,3 +77,6 @@ test_contract
 # logs
 log/
 logs/
+
+# Docker
+docker-compose.override.yaml
