@@ -1,12 +1,9 @@
-import logging
-from functools import wraps
-from telegram import ChatAction
 import inspect
+from functools import wraps
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+from telegram import ChatAction
 
-logger = logging.getLogger()
+
 def send_typing_action(func):
     """Sends typing action while processing func command."""
 

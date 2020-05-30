@@ -1,13 +1,12 @@
 import logging
-import time
 
 from aoiklivereload import LiveReloader
-from chat_bot.settings import Config, DEBUG
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import Updater, CallbackQueryHandler
 
 from chat_bot.services import register_user, search_address
+from chat_bot.settings import Config, DEBUG
 from chat_bot.utils import send_typing_action
 
 logging.basicConfig(level=logging.DEBUG,
