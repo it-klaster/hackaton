@@ -49,5 +49,7 @@ class RegistrationView:
     def not_found_user(self, chat_id):
         return self.bot.send_message(chat_id=chat_id, text='Мы знакомы?')
 
-    def change_adress(self, chat_id):
-        return self.bot.send_message(chat_id=chat_id, text='Функционал смены адреса в разработке.')
+    def change_adress(self, chat_id, user):
+        return self.bot.send_message(chat_id=chat_id,
+                                     text=f"""Вы подписаны на оповещения по адресу {user["address"]}. 
+                                     Для изменения адреса напишите /register """)

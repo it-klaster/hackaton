@@ -79,16 +79,18 @@ class RegistrationController(MainController):
 
         registered = register_user(user)
         self.view.reply_success(chat_id, registered)
-        return self.states_dict["SUCCESS"]
+
+        # TODO: Remove when realize adress change
+        return ConversationHandler.END
 
     @send_typing_action
     def change_adress(self, update, context):
         chat_id = update.message.chat_id
-        _id = update.callback_query.from_user.id
+        _id = update.message.from_user.id
         user = get_user(_id)
         if not user:
             self.view.not_found_user(chat_id)
-        return self.view.change_adress(chat_id)
+        return self.view.change_adress(chat_id, user)
 
 
     def __process_handlers(self):
