@@ -3,7 +3,8 @@ services:
     bot:
         build: .
         environment:
+          DEBUG: 'True'
           PROXY: 'socks5h://45.77.226.78:3000'
         volumes:
           - ./:/code
-        command: ["python", "chat_bot/main_bot.py"]
+        command: ["python", "chat_bot/main.py"]

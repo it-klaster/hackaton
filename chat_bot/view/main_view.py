@@ -14,5 +14,5 @@ class MainView:
         #     KeyboardButton(text=Buttons.sample_button),
         # ]]
         # markup = ReplyKeyboardMarkup(keyboard=keyboard)
-        self.bot.send_message(chat_id=chat_id, text=self.greeting_message)
+        return self.bot.send_message(chat_id=chat_id, text=self.greeting_message)
         # self.logger.info(inspect.stack()[0][3])
