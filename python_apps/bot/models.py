@@ -47,3 +47,15 @@ class Event(Base):
     def __repr__(self):
         short_msg = textwrap.shorten(self.msg, width=50, placeholder="...")
         return f'<Event {self.start_date} {short_msg}>'
+
+
+class SentEvent(Base):
+    __tablename__ = 'sent_events_log'
+
+    id = Column(Integer, primary_key=True)
+    sent_at = Column(DateTime, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    event_id = Column(Integer, ForeignKey('events.id'))
+
+    def __repr__(self):
+        return f'<SentEvent {self.sent_at} {self.user}>'
