@@ -1,4 +1,5 @@
 import inspect
+import logging
 from functools import wraps
 
 from telegram import ChatAction
@@ -21,3 +22,11 @@ def send_typing_action(func):
         return command_method
 
     return command_func
+
+
+def get_logging():
+    logger = logging.getLogger()
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    return logger

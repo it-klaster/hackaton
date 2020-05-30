@@ -1,5 +1,3 @@
-import logging
-
 from aoiklivereload import LiveReloader
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import MessageHandler, Filters
@@ -7,12 +5,7 @@ from telegram.ext import Updater, CallbackQueryHandler
 
 from chat_bot.services import register_user, search_address
 from chat_bot.settings import Config, DEBUG
-from chat_bot.utils import send_typing_action
-
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-logger = logging.getLogger()
+from chat_bot.utils import send_typing_action, get_logging
 
 REQUEST_KWARGS = {
     'proxy_url': Config.PROXY
@@ -20,6 +13,7 @@ REQUEST_KWARGS = {
 
 class DialogBot:
     def __init__(self, token):
+        self.log = get_logging()
         self.updater = Updater(token, request_kwargs=REQUEST_KWARGS, use_context=True)
         handler = MessageHandler(Filters.text | Filters.command, self.handle_message)
         self.updater.dispatcher.add_handler(handler)
