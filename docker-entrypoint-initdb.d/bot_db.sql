@@ -62,6 +62,7 @@ CREATE TABLE `bot_admins` (
 
 LOCK TABLES `bot_admins` WRITE;
 /*!40000 ALTER TABLE `bot_admins` DISABLE KEYS */;
+INSERT INTO `bot_admins` VALUES (1,'admin',0,1,1);
 /*!40000 ALTER TABLE `bot_admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,6 +108,7 @@ CREATE TABLE `bot_estatus` (
 
 LOCK TABLES `bot_estatus` WRITE;
 /*!40000 ALTER TABLE `bot_estatus` DISABLE KEYS */;
+INSERT INTO `bot_estatus` VALUES (1,'Выполняется');
 /*!40000 ALTER TABLE `bot_estatus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +121,7 @@ DROP TABLE IF EXISTS `bot_etimer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bot_etimer` (
   `ID` int DEFAULT NULL,
-  `Name` int DEFAULT NULL,
+  `Name` text,
   `StartTime` datetime DEFAULT NULL,
   `StopTime` datetime DEFAULT NULL,
   `SendTime` datetime DEFAULT NULL,
@@ -133,6 +135,7 @@ CREATE TABLE `bot_etimer` (
 
 LOCK TABLES `bot_etimer` WRITE;
 /*!40000 ALTER TABLE `bot_etimer` DISABLE KEYS */;
+INSERT INTO `bot_etimer` VALUES (1,'Сутки','2020-05-31 12:00:05','2020-05-31 13:04:16','2020-05-30 13:04:22',0);
 /*!40000 ALTER TABLE `bot_etimer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,6 +161,7 @@ CREATE TABLE `bot_events` (
 
 LOCK TABLES `bot_events` WRITE;
 /*!40000 ALTER TABLE `bot_events` DISABLE KEYS */;
+INSERT INTO `bot_events` VALUES (1,'Обычная подписка',1,1,1);
 /*!40000 ALTER TABLE `bot_events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,6 +184,7 @@ CREATE TABLE `bot_eweight` (
 
 LOCK TABLES `bot_eweight` WRITE;
 /*!40000 ALTER TABLE `bot_eweight` DISABLE KEYS */;
+INSERT INTO `bot_eweight` VALUES (1,'Важное');
 /*!40000 ALTER TABLE `bot_eweight` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,7 +199,8 @@ CREATE TABLE `bot_idevents` (
   `Id` int DEFAULT NULL,
   `Name` text,
   `AlertID` int DEFAULT NULL,
-  `StatusID` int DEFAULT NULL
+  `StatusID` int DEFAULT NULL,
+  `AdrID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -204,6 +210,7 @@ CREATE TABLE `bot_idevents` (
 
 LOCK TABLES `bot_idevents` WRITE;
 /*!40000 ALTER TABLE `bot_idevents` DISABLE KEYS */;
+INSERT INTO `bot_idevents` VALUES (1,'Отключение воды',1,1,1);
 /*!40000 ALTER TABLE `bot_idevents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-30 12:25:59
+-- Dump completed on 2020-05-30 14:48:05
