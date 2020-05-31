@@ -24,17 +24,17 @@ def get_locale():
 
 
 class BaseView(ModelView):
-    form_args = {
-        'name': {'label': 'Название'},
-        'user': {'label': 'Пользователь'},
-        'timer': {'label': 'Таймер'},
-        'event_type': {'label': 'Событие'},
-        'send_at': {'label': 'Отправить с'},
-        'address': {'label': 'Адрес'},
-        'phone': {'label': 'Телефон'},
-        'start_time': {'label': 'Начало события'},
-        'stop_time': {'label': 'Конец события'},
-        'send_time': {'label': 'Время начала отправки'},
+    column_labels = {
+        'name': 'Название',
+        'user': 'Пользователь',
+        'timer': 'Таймер',
+        'event_type': 'Событие',
+        'send_at': 'Отправить с',
+        'address': 'Адрес',
+        'phone': 'Телефон',
+        'start_time': 'Начало события',
+        'stop_time': 'Конец события',
+        'send_time': 'Время начала отправки',
     }
 
 
