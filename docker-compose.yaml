@@ -23,6 +23,7 @@ services:
             - ./:/code
         ports:
             - 5000:5000
+        restart: on-failure
         command: ["python", "admin/app.py"]
 
     db:
