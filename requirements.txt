@@ -7,3 +7,5 @@ fdb
 firebirdsql
 python-dotenv
 mysqlclient
+flask
+flask-admin

@@ -1,11 +1,12 @@
 import textwrap
 
-from settings import Config
 from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, UniqueConstraint, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker, Session
+
+from chat_bot.settings import Config
 
 engine = create_engine(Config.DB_URI, echo=True)
 
@@ -46,6 +47,9 @@ class Address(Base):
     def __repr__(self):
         return f'<Address {self.name}>'
 
+    def __str__(self):
+        return self.name
+
 
 class Event(Base):
     __tablename__ = 'bot_events'
@@ -60,6 +64,9 @@ class Event(Base):
     user = relationship('User')
     timer = relationship('EventTimer', backref='events')
     event_type = relationship('EventType')
+
+    def __str__(self):
+        return self.name
 
 
 class EventType(Base):
@@ -135,6 +142,9 @@ class EventTimer(Base):
     stop_time = Column('StopTime', DateTime)
     send_time = Column('SendTime', DateTime)
     repeat = Column('Repeat', TINYINT(1))
+
+    def __str__(self):
+        return self.name
 
 
 class EventWeight(Base):
