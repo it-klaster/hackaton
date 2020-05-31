@@ -30,8 +30,8 @@ def normalize_adrs(str) -> str:
     return ' '.join(str.split()).lower()
 
 
-def find_address(latitude: float, longitude: float):
-    geocoder_url = f'http://api.aigeo.ru/geocoder/service?search={latitude},{longitude}&format=json'
+def find_address(longitude: float, latitude: float):
+    geocoder_url = f'http://api.aigeo.ru/geocoder/service?search={longitude},{latitude}&format=json'
     resp = requests.get(url=geocoder_url)
     resp.raise_for_status()
     parsed_resp = resp.json()
