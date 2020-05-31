@@ -13,8 +13,9 @@ SET NAMES utf8mb4;
 
 DROP TABLE IF EXISTS `bot_addreses`;
 CREATE TABLE `bot_addreses` (
-  `ID` int(11) DEFAULT NULL,
-  `NAME` text COLLATE utf8mb4_unicode_ci
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_addreses` (`ID`, `NAME`) VALUES
@@ -349,11 +350,12 @@ INSERT INTO `bot_addreses` (`ID`, `NAME`) VALUES
 
 DROP TABLE IF EXISTS `bot_admins`;
 CREATE TABLE `bot_admins` (
-  `ID` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` text COLLATE utf8mb4_unicode_ci,
   `TelegrammID` int(11) DEFAULT NULL,
   `OrgID` int(11) DEFAULT NULL,
-  `RulesID` int(11) DEFAULT NULL
+  `RulesID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_admins` (`ID`, `Name`, `TelegrammID`, `OrgID`, `RulesID`) VALUES
@@ -361,16 +363,18 @@ INSERT INTO `bot_admins` (`ID`, `Name`, `TelegrammID`, `OrgID`, `RulesID`) VALUE
 
 DROP TABLE IF EXISTS `bot_elog`;
 CREATE TABLE `bot_elog` (
-  `ID` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `EventID` int(11) DEFAULT NULL,
-  `OperatorID` int(11) DEFAULT NULL
+  `OperatorID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `bot_estatus`;
 CREATE TABLE `bot_estatus` (
-  `Id` int(11) DEFAULT NULL,
-  `Name` text COLLATE utf8mb4_unicode_ci
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_estatus` (`Id`, `Name`) VALUES
@@ -378,12 +382,13 @@ INSERT INTO `bot_estatus` (`Id`, `Name`) VALUES
 
 DROP TABLE IF EXISTS `bot_etimer`;
 CREATE TABLE `bot_etimer` (
-  `ID` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` text COLLATE utf8mb4_unicode_ci,
   `StartTime` datetime DEFAULT NULL,
   `StopTime` datetime DEFAULT NULL,
   `SendTime` datetime DEFAULT NULL,
-  `Repeat` int(11) DEFAULT NULL
+  `Repeat` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_etimer` (`ID`, `Name`, `StartTime`, `StopTime`, `SendTime`, `Repeat`) VALUES
@@ -391,12 +396,13 @@ INSERT INTO `bot_etimer` (`ID`, `Name`, `StartTime`, `StopTime`, `SendTime`, `Re
 
 DROP TABLE IF EXISTS `bot_events`;
 CREATE TABLE `bot_events` (
-  `ID` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` text COLLATE utf8mb4_unicode_ci,
   `UserID` int(11) DEFAULT NULL,
   `EventID` int(11) DEFAULT NULL,
   `TimerID` int(11) DEFAULT NULL,
-  `SendAt` datetime DEFAULT NULL
+  `SendAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_events` (`ID`, `Name`, `UserID`, `EventID`, `TimerID`, `SendAt`) VALUES
@@ -404,8 +410,9 @@ INSERT INTO `bot_events` (`ID`, `Name`, `UserID`, `EventID`, `TimerID`, `SendAt`
 
 DROP TABLE IF EXISTS `bot_eweight`;
 CREATE TABLE `bot_eweight` (
-  `Id` int(11) DEFAULT NULL,
-  `Name` text COLLATE utf8mb4_unicode_ci
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_eweight` (`Id`, `Name`) VALUES
@@ -413,11 +420,12 @@ INSERT INTO `bot_eweight` (`Id`, `Name`) VALUES
 
 DROP TABLE IF EXISTS `bot_idevents`;
 CREATE TABLE `bot_idevents` (
-  `Id` int(11) DEFAULT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` text COLLATE utf8mb4_unicode_ci,
   `AlertID` int(11) DEFAULT NULL,
   `StatusID` int(11) DEFAULT NULL,
-  `AdrID` int(11) DEFAULT NULL
+  `AdrID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bot_idevents` (`Id`, `Name`, `AlertID`, `StatusID`, `AdrID`) VALUES
@@ -425,7 +433,7 @@ INSERT INTO `bot_idevents` (`Id`, `Name`, `AlertID`, `StatusID`, `AdrID`) VALUES
 
 DROP TABLE IF EXISTS `bot_msglog`;
 CREATE TABLE `bot_msglog` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `UserID` int(11) DEFAULT NULL,
   `MagText` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`ID`)
@@ -434,16 +442,18 @@ CREATE TABLE `bot_msglog` (
 
 DROP TABLE IF EXISTS `bot_org`;
 CREATE TABLE `bot_org` (
-  `Id` int(11) DEFAULT NULL,
-  `Name` text COLLATE utf8mb4_unicode_ci
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 DROP TABLE IF EXISTS `bot_rules`;
 CREATE TABLE `bot_rules` (
-  `Id` int(11) DEFAULT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `EventId` int(11) DEFAULT NULL,
-  `OrgID` int(11) DEFAULT NULL
+  `OrgID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
