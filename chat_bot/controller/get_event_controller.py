@@ -4,7 +4,7 @@ from chat_bot.constants import Buttons
 from chat_bot.controller.main_controller import MainController
 from chat_bot.controller.registration_controller import RegistrationController
 from chat_bot.services import search_address, get_events
-from chat_bot.utils import send_typing_action, get_logging, normalize_adrs
+from chat_bot.utils import send_typing_action, get_logging, normalize_adrs, find_address
 from chat_bot.view.get_event_view import GetEventView
 
 logger = get_logging()
@@ -39,6 +39,14 @@ class GetEventController(MainController):
         else:
             chat_id = update.callback_query.chat_instance
             msg = update.message.text
+
+        logger.debug('----111---')
+        loc = update.message.location
+        if loc:
+            # We catch Filter.location
+            logger.debug('----exist---')
+            msg = find_address(longitude=loc.longitude, latitude=loc.latitude)
+
         normal_msg = normalize_adrs(msg)
         addresses = search_address(normal_msg)
 
@@ -94,7 +102,8 @@ class GetEventController(MainController):
                                                                       MessageHandler(Filters.text(Buttons.get_events), self.whait_input)],
                                                        states={
                                                            self.states_dict["WAIT_INPUT"]: self.default_handlers + [
-                                                               MessageHandler(Filters.text, self.specify_adress)
+                                                               MessageHandler(Filters.text, self.specify_adress),
+                                                               MessageHandler(Filters.location, self.specify_adress)
                                                            ],
                                                            self.states_dict["REPEAT"]: self.default_handlers + [
                                                                MessageHandler(Filters.text, self.repeat)],
