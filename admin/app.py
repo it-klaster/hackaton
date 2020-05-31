@@ -23,25 +23,40 @@ def get_locale():
     return session.get('lang', 'ru')
 
 
-class AddressView(ModelView):
+class BaseView(ModelView):
+    form_args = {
+        'name': {'label': 'Название'},
+        'user': {'label': 'Пользователь'},
+        'timer': {'label': 'Таймер'},
+        'event_type': {'label': 'Событие'},
+        'send_at': {'label': 'Отправить с'},
+        'address': {'label': 'Адрес'},
+        'phone': {'label': 'Телефон'},
+        'start_time': {'label': 'Начало события'},
+        'stop_time': {'label': 'Конец события'},
+        'send_time': {'label': 'Время начала отправки'},
+    }
+
+
+class AddressView(BaseView):
     form_excluded_columns = ['users']
 
 
-class EventTimerView(ModelView):
+class EventTimerView(BaseView):
     form_excluded_columns = ['events']
 
 
 # Add administrative views here
-admin.add_view(ModelView(User, session))
+admin.add_view(BaseView(User, session))
 admin.add_view(AddressView(Address, session))
-admin.add_view(ModelView(Event, session, category='Event'))
-admin.add_view(ModelView(EventType, session, category='Event'))
-admin.add_view(ModelView(AdminUser, session, category='Admin'))
-admin.add_view(ModelView(Organization, session, category='Admin'))
-admin.add_view(ModelView(Rules, session, category='Admin'))
-admin.add_view(ModelView(EventStatus, session, category='Event'))
-admin.add_view(ModelView(EventTimer, session, category='Event'))
-admin.add_view(ModelView(EventWeight, session, category='Event'))
+admin.add_view(BaseView(Event, session, category='Event'))
+admin.add_view(BaseView(EventType, session, category='Event'))
+admin.add_view(BaseView(AdminUser, session, category='Admin'))
+admin.add_view(BaseView(Organization, session, category='Admin'))
+admin.add_view(BaseView(Rules, session, category='Admin'))
+admin.add_view(BaseView(EventStatus, session, category='Event'))
+admin.add_view(EventTimerView(EventTimer, session, category='Event'))
+admin.add_view(BaseView(EventWeight, session, category='Event'))
 
 
 
