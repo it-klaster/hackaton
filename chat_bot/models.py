@@ -1,8 +1,8 @@
 import textwrap
 
 from settings import Config
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, UniqueConstraint, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker, Session
@@ -52,13 +52,14 @@ class Event(Base):
 
     id = Column('ID', Integer, primary_key=True)
     name = Column('Name', String, nullable=False)
-    user_id = Column('UserID', Integer, ForeignKey('bot_users.id'))
-    event_id = Column('EventID', Integer, ForeignKey('bot_idevents.id'))
-    timer_id = Column('TimerID', Integer, ForeignKey('bot_etimer.id'))
+    user_id = Column('UserID', Integer, ForeignKey('bot_users.ID'))
+    event_id = Column('EventID', Integer, ForeignKey('bot_idevents.Id'))
+    timer_id = Column('TimerID', Integer, ForeignKey('bot_etimer.ID'))
+    send_at = Column('SendAt', DateTime, default=None)
 
-    def __repr__(self):
-        short_msg = textwrap.shorten(self.name, width=50, placeholder="...")
-        return f'<Event {short_msg}>'
+    user = relationship('User')
+    timer = relationship('EventTimer', backref='events')
+    event_type = relationship('EventType')
 
 
 class EventType(Base):
@@ -67,8 +68,14 @@ class EventType(Base):
     id = Column('Id', Integer, primary_key=True)
     name = Column('Name', String, nullable=False)
     alert_id = Column('AlertID', Integer)   # TODO: Foreignkey
-    status_id = Column('StatusID', Integer, ForeignKey('bot_estatus.id'))
-    address_id = Column('AdrID', Integer, ForeignKey('bot_addreses.id'))
+    status_id = Column('StatusID', Integer, ForeignKey('bot_estatus.Id'))
+    address_id = Column('AdrID', Integer, ForeignKey('bot_addreses.ID'))
+
+    address = relationship('Address')
+
+    def __repr__(self):
+        short_msg = textwrap.shorten(self.name, width=50, placeholder="...")
+        return f'<Event {short_msg}>'
 
 
 class MsgLog(Base):
