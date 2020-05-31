@@ -10,11 +10,14 @@ class GetEventView(RegistrationView):
         answer = ask_adr_msg.format(user.first_name)
         return self.bot.send_message(chat_id=chat_id, text=answer)
 
-    def reply_success(self, chat_id, adr, events):
-        # delete menu
+    def reply_success(self, chat_id, data):
+        events = data['events']
+        adr = data['adr']
         event_names = [event.name for event in events]
         list = '\n-'.join(event_names)
         answer = f'Список событий по адресу: {adr.name}:\n {list}'
+
+        # to delete menu
         reply_markup = ReplyKeyboardRemove()
         if not list:
             return self.bot.send_message(chat_id=chat_id,

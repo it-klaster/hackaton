@@ -44,7 +44,8 @@ class GetEventController(RegistrationController):
             return self.states_dict["REPEAT"]
 
         events = get_events(adr[0].id)
-        self.view.reply_success(chat_id, adr[0], events)
+
+        self.view.reply_success(chat_id, {'adr': adr[0], 'events': events})
 
         return self.states_dict["WAIT_INPUT"]
 

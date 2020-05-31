@@ -41,10 +41,9 @@ class RegistrationView:
 
     def reply_success(self, chat_id, user):
         # delete menu
-        address = user["address"]
         reply_markup = ReplyKeyboardRemove()
         self.bot.send_message(chat_id=chat_id,
-                                 text=f'Ok, запишем: Что будет нового по адресу: {address} сообщить {user["first_name"]}',
+                                 text=f'Ok, запишем: Что будет нового по адресу: {user.address.name} сообщить {user.name}',
                                  reply_markup=reply_markup)
 
 

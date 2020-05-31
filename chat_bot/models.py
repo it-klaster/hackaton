@@ -12,6 +12,9 @@ engine = create_engine(Config.DB_URI, echo=True)
 _SessionFactory = sessionmaker(bind=engine)
 session = Session(engine)
 
+# TODO: change in prod
+session.expire_on_commit = False
+
 Base = declarative_base()
 
 
@@ -21,10 +24,12 @@ class User(Base):
     id = Column('ID', Integer, primary_key=True)
     name = Column('Name', String)
     telegramm_id = Column('TelegrammID', String, nullable=False, unique=True)
-    address_id = Column('AddressID', Integer, ForeignKey('bot_addreses.id'))
-    entrance = Column(Integer)  # Not exist in db
+    address_id = Column('AddressID', Integer, ForeignKey('bot_addreses.ID'))
+    # entrance = Column(Integer)  # Not exist in db
     subscribe = Column('Subscribe', TINYINT(1))
     phone = Column('Phone', String)
+
+    address = relationship('Address', back_populates="users")
 
     def __repr__(self):
         return f'<User {self.telegramm_id}>'
@@ -35,6 +40,8 @@ class Address(Base):
 
     id = Column('ID', Integer, primary_key=True)
     name = Column('NAME', String(256), nullable=False)
+
+    users = relationship("User")
 
     def __repr__(self):
         return f'<Address {self.name}>'
