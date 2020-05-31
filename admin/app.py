@@ -1,10 +1,12 @@
-from flask import Flask
+from flask import Flask, request
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_babelex import Babel
 
 from chat_bot.models import *
 
 app = Flask(__name__)
+babel = Babel(app)
 
 app.secret_key = 'super secret key'
 
@@ -12,6 +14,13 @@ app.secret_key = 'super secret key'
 app.config['FLASK_ADMIN_SWATCH'] = 'flatly'
 
 admin = Admin(app, name='bot_admin', template_mode='bootstrap3')
+
+@babel.localeselector
+def get_locale():
+    from flask import session
+    if request.args.get('lang'):
+        session['lang'] = request.args.get('lang')
+    return session.get('lang', 'ru')
 
 
 class AddressView(ModelView):

@@ -9,3 +9,4 @@ python-dotenv
 mysqlclient
 flask
 flask-admin
+flask-babelex
