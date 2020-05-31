@@ -1,10 +1,15 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
+
+from chat_bot.constants import Buttons
+from chat_bot.view.main_view import MainView
 
 ask_adr_msg = "Здравствуйте, {}! \nЧтобы получать уведомления сервиса 'Умный город',  укажите адрес дома"
 
-class RegistrationView:
+class RegistrationView(MainView):
 
     def __init__(self, bot):
+        super().__init__(bot)
         self.bot = bot
 
     def build_menu(self,
@@ -21,7 +26,11 @@ class RegistrationView:
 
     def ask_adress(self, chat_id, user):
         answer = ask_adr_msg.format(user.first_name)
-        return self.bot.send_message(chat_id=chat_id, text=answer)
+        keyboard = [
+            [KeyboardButton(text=Buttons.cancel)]
+        ]
+        markup = ReplyKeyboardMarkup(keyboard=keyboard)
+        return self.bot.send_message(chat_id=chat_id, text=answer, reply_markup=markup)
 
 
     def not_found(self, chat_id, adr):

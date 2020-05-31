@@ -1,5 +1,6 @@
-from telegram.ext import ConversationHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import ConversationHandler, MessageHandler, Filters, CallbackQueryHandler, CommandHandler
 
+from chat_bot.constants import Buttons
 from chat_bot.controller.main_controller import MainController
 from chat_bot.services import search_address, register_user, get_user
 from chat_bot.utils import get_logging, normalize_adrs, send_typing_action
@@ -9,6 +10,8 @@ logger = get_logging()
 
 
 class RegistrationController(MainController):
+
+    name = 'registration'
 
     states_dict = {
         "WAIT_INPUT": 1,
@@ -78,7 +81,7 @@ class RegistrationController(MainController):
                 'telegramm_id': _from.id,
                 'address': adr
                 }
-        logger.error(f"!!!!!!!!!!!!!{user}")
+
         registered = register_user(user)
         self.view.reply_success(chat_id, registered)
 
@@ -96,11 +99,16 @@ class RegistrationController(MainController):
 
 
     def __process_handlers(self):
-        conversation_handler = ConversationHandler(entry_points=[MessageHandler(Filters.text('/register'), self.whait_input)],
+        self.conversation_handler = ConversationHandler(entry_points=[MessageHandler(Filters.text('/register'), self.whait_input),
+                                                                      MessageHandler(Filters.text(Buttons.register), self.whait_input)],
                                                    states={
                                                        self.states_dict["WAIT_INPUT"]: self.default_handlers + [MessageHandler(Filters.text, self.specify_adress)],
                                                        self.states_dict["REPEAT"]: self.default_handlers + [MessageHandler(Filters.text, self.repeat)],
                                                        self.states_dict["CHOOSE_OPTIONS"]: self.default_handlers + [CallbackQueryHandler(self.process_options)],
                                                        self.states_dict["SUCCESS"]: self.default_handlers + [MessageHandler(Filters.text, self.change_adress)]
-                                                   }, fallbacks=[], allow_reentry=True)
-        self.dispatcher.add_handler(conversation_handler)
+                                                   },
+                                                    fallbacks=[
+                                                        # MessageHandler(Filters.text('/register'), self.whait_input
+                                                    ],
+                                                        allow_reentry=True)
+        self.dispatcher.add_handler(self.conversation_handler)

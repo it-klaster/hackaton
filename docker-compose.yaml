@@ -4,7 +4,7 @@ services:
         build: .
         environment:
           DEBUG: 'True'
-          PROXY: 'socks5h://45.77.226.78:3000'
+          PROXY: 'socks5h://49.12.4.194:15149'
           DB_URI: "mysql+mysqldb://root:root@db:3306/bot_db?use_unicode=1&charset=utf8mb4"
         depends_on:
           - db
