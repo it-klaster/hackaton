@@ -23,12 +23,14 @@ class App:
         self.add_sending_events()
 
     def add_controllers(self):
-        main_controller = MainController(dispatcher=self.dispatcher)
+        main_controller = MainController(dispatcher=self.dispatcher,
+                                         controllers=[
+                                             RegistrationController(dispatcher=self.dispatcher),
+                                             GetEventController(dispatcher=self.dispatcher)
+                                         ])
         for handler in main_controller.default_handlers:
             self.dispatcher.add_handler(handler)
 
-        registration_controller = RegistrationController(dispatcher=self.dispatcher)
-        get_event_controller = GetEventController(dispatcher=self.dispatcher)
 
     def add_sending_events(self):
         queue = self.updater.job_queue
