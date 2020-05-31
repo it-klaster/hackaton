@@ -1,3 +1,6 @@
+## Bot for telegramm
+
+@sasc_bot
 
 ## Dev Env 
 
