@@ -1,11 +1,12 @@
 import textwrap
 
-from settings import Config
 from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, UniqueConstraint, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker, Session
+
+from chat_bot.settings import Config
 
 engine = create_engine(Config.DB_URI, echo=True)
 
@@ -34,6 +35,9 @@ class User(Base):
     def __repr__(self):
         return f'<User {self.telegramm_id}>'
 
+    def __str__(self):
+        return f'{self.name} ({self.telegramm_id})'
+
 
 class Address(Base):
     __tablename__ = 'bot_addreses'
@@ -45,6 +49,9 @@ class Address(Base):
 
     def __repr__(self):
         return f'<Address {self.name}>'
+
+    def __str__(self):
+        return self.name
 
 
 class Event(Base):
@@ -61,6 +68,9 @@ class Event(Base):
     timer = relationship('EventTimer', backref='events')
     event_type = relationship('EventType')
 
+    def __str__(self):
+        return self.name
+
 
 class EventType(Base):
     __tablename__ = 'bot_idevents'
@@ -75,7 +85,11 @@ class EventType(Base):
 
     def __repr__(self):
         short_msg = textwrap.shorten(self.name, width=50, placeholder="...")
-        return f'<Event {short_msg}>'
+        return f'<EventType {short_msg}>'
+
+    def __str__(self):
+        short_msg = textwrap.shorten(self.name, width=50, placeholder="...")
+        return f'{short_msg} ({self.address})'
 
 
 class MsgLog(Base):
@@ -135,6 +149,9 @@ class EventTimer(Base):
     stop_time = Column('StopTime', DateTime)
     send_time = Column('SendTime', DateTime)
     repeat = Column('Repeat', TINYINT(1))
+
+    def __str__(self):
+        return f'{self.name} ({self.start_time} - {self.stop_time})'
 
 
 class EventWeight(Base):
