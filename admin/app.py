@@ -12,17 +12,27 @@ app.secret_key = 'super secret key'
 app.config['FLASK_ADMIN_SWATCH'] = 'flatly'
 
 admin = Admin(app, name='bot_admin', template_mode='bootstrap3')
+
+
+class AddressView(ModelView):
+    form_excluded_columns = ['users']
+
+
+class EventTimerView(ModelView):
+    form_excluded_columns = ['events']
+
+
 # Add administrative views here
 admin.add_view(ModelView(User, session))
-admin.add_view(ModelView(Address, session))
-admin.add_view(ModelView(Event, session))
-admin.add_view(ModelView(EventType, session))
-admin.add_view(ModelView(AdminUser, session))
-admin.add_view(ModelView(Organization, session))
-admin.add_view(ModelView(Rules, session))
-admin.add_view(ModelView(EventStatus, session))
-admin.add_view(ModelView(EventTimer, session))
-admin.add_view(ModelView(EventWeight, session))
+admin.add_view(AddressView(Address, session))
+admin.add_view(ModelView(Event, session, category='Event'))
+admin.add_view(ModelView(EventType, session, category='Event'))
+admin.add_view(ModelView(AdminUser, session, category='Admin'))
+admin.add_view(ModelView(Organization, session, category='Admin'))
+admin.add_view(ModelView(Rules, session, category='Admin'))
+admin.add_view(ModelView(EventStatus, session, category='Event'))
+admin.add_view(ModelView(EventTimer, session, category='Event'))
+admin.add_view(ModelView(EventWeight, session, category='Event'))
 
 
 

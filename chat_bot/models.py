@@ -35,6 +35,9 @@ class User(Base):
     def __repr__(self):
         return f'<User {self.telegramm_id}>'
 
+    def __str__(self):
+        return f'{self.name} ({self.telegramm_id})'
+
 
 class Address(Base):
     __tablename__ = 'bot_addreses'
@@ -82,7 +85,11 @@ class EventType(Base):
 
     def __repr__(self):
         short_msg = textwrap.shorten(self.name, width=50, placeholder="...")
-        return f'<Event {short_msg}>'
+        return f'<EventType {short_msg}>'
+
+    def __str__(self):
+        short_msg = textwrap.shorten(self.name, width=50, placeholder="...")
+        return f'{short_msg} ({self.address})'
 
 
 class MsgLog(Base):
@@ -144,7 +151,7 @@ class EventTimer(Base):
     repeat = Column('Repeat', TINYINT(1))
 
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.start_time} - {self.stop_time})'
 
 
 class EventWeight(Base):
