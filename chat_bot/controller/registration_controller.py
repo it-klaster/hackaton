@@ -37,11 +37,11 @@ class RegistrationController(MainController):
 
     @send_typing_action
     def specify_adress(self, update, context):
-        if not hasattr(update, 'callback_query'):
-            chat_id = update.callback_query.chat_instance
+        if hasattr(update, 'callback_query'):
+            chat_id = update.message.chat_id
             msg = update.message.text
         else:
-            chat_id = update.message.chat_id
+            chat_id = update.callback_query.chat_instance
             msg = update.message.text
         normal_msg = normalize_adrs(msg)
         addresses = search_address(normal_msg)
@@ -78,7 +78,7 @@ class RegistrationController(MainController):
                 'telegramm_id': _from.id,
                 'address': adr
                 }
-
+        logger.error(f"!!!!!!!!!!!!!{user}")
         registered = register_user(user)
         self.view.reply_success(chat_id, registered)
 
