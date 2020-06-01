@@ -11,7 +11,8 @@ class GetEventView(RegistrationView):
     def ask_adress(self, chat_id, user):
         answer = ask_adr_msg.format(user.first_name)
         keyboard = [
-            [KeyboardButton(text=Buttons.cancel)]
+            [KeyboardButton(text=Buttons.cancel)],
+            [KeyboardButton(text=Buttons.get_location, request_location=True)]
         ]
         markup = ReplyKeyboardMarkup(keyboard=keyboard)
         return self.bot.send_message(chat_id=chat_id, text=answer, reply_markup=markup)

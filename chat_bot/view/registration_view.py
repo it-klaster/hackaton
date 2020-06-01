@@ -1,10 +1,15 @@
+import textwrap
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 
 from chat_bot.constants import Buttons
+from chat_bot.utils import get_logging
 from chat_bot.view.main_view import MainView
 
 ask_adr_msg = "Здравствуйте, {}! \nЧтобы получать уведомления сервиса 'Умный город',  укажите адрес дома"
+
+logger = get_logging()
 
 class RegistrationView(MainView):
 
@@ -42,9 +47,17 @@ class RegistrationView(MainView):
                                         text=f'Я знаю слишком много ({count}) адресов, похожих на "{msg}".\nУточните адрес.')
 
     def choose_address(self, chat_id, addresses):
-        button_list = [InlineKeyboardButton(adr.name, callback_data=adr.name)
-                       for adr in addresses]
+        button_list = [
+            InlineKeyboardButton(
+                adr.name,
+                # Ограничение на длину символов в callback_data?
+                # При большем количестве символов вызывается telegram.error.BadRequest: Button_data_invalid
+                # TODO: Возможно стоит передавать Address.id
+                callback_data=adr.name[:37]
+            )
+            for adr in addresses]
         reply_markup = InlineKeyboardMarkup(self.build_menu(button_list, n_cols=2))
+        logger.debug(reply_markup)
         return self.bot.send_message(chat_id=chat_id, text='Один из этих адресов?',
                                         reply_markup=reply_markup)
 
