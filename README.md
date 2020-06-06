@@ -16,3 +16,6 @@ $ sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' ./docker-entrypoint-initdb.
 ```
 
 1217627259:AAHLhp3fS6FV5v4YJs2wy1-mNMJTmGcQdc0
+
+## Trello
+https://trello.com/b/35uBM0Z4/atom-hakaton

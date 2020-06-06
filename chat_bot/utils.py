@@ -1,5 +1,6 @@
 import inspect
 import logging
+import re
 from functools import wraps
 
 import requests
@@ -28,6 +29,13 @@ def get_logging():
 
 def normalize_adrs(str) -> str:
     return ' '.join(str.split()).lower()
+
+
+def normalize_from_geocoder(addres):
+    line = re.search(r"(?<=ул\.\s)\w*", addres)
+    building = re.search(r'(?<=д\.\s)\w*', addres)
+    if line and building:
+        return f'{line.group(0)} {building.group(0)}'
 
 
 def find_address(longitude: float, latitude: float):

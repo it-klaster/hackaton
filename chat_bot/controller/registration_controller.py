@@ -77,7 +77,8 @@ class RegistrationController(MainController):
 
         registered = register_user(user)
         self.view.reply_success(chat_id, registered)
-        return self.states_dict['WAIT_INPUT']
+        # return self.states_dict['WAIT_INPUT']
+        return ConversationHandler.BEGIN
 
     @send_typing_action
     def change_adress(self, update, context):
@@ -106,7 +107,7 @@ class RegistrationController(MainController):
                                                    },
                                                     fallbacks=[
                                                         # MessageHandler(Filters.text('/register'), self.whait_input
-                                                        *self.default_handlers
+                                                        # *self.default_handlers
                                                     ],
                                                         allow_reentry=True)
         self.dispatcher.add_handler(self.conversation_handler)

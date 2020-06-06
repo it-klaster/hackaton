@@ -3,9 +3,9 @@ services:
     bot:
         build: .
         environment:
-#          PYTHONUNBUFFERED: 1
-#          DEBUG: 'True'
-#          PROXY: 'socks5h://173.248.156.213:31648' #https://50na50.net/ru/proxy/socks5list
+          PYTHONUNBUFFERED: 1
+          DEBUG: 'True'
+          PROXY: 'socks5h://173.248.156.213:31648' #https://50na50.net/ru/proxy/socks5list
           DB_URI: "mysql+mysqldb://root:root@db:3306/bot_db?use_unicode=1&charset=utf8mb4"
           BOT_TOKEN: '1205108650:AAFLE6D3iQDuP3IneF7fwsMMm4jxCgm0ts0'
         depends_on:
