@@ -19,10 +19,10 @@ class MainController:
 
         self.default_handlers = [
             CommandHandler(command="start", callback=self.main_menu),
-
             CommandHandler(command="help", callback=self.help),
-            MessageHandler(Filters.text(Buttons.help), self.help),
-            MessageHandler(Filters.text(Buttons.cancel), self.main_menu)
+            MessageHandler(Filters.regex(Buttons.cancel),  callback=self.main_menu),
+            MessageHandler(Filters.regex(Buttons.help), self.help),
+            MessageHandler(Filters.regex(r'\w'), self.unknown)
         ]
 
         self.__process_handlers()
@@ -36,11 +36,13 @@ class MainController:
         chat_id = update.message.chat_id
         return self.view.main_menu(chat_id)
 
+    # @send_typing_action
     def unknown(self, update, context):
         self.view.unknown(update.message.chat_id)
 
 
     def __process_handlers(self):
         pass
+
 
 

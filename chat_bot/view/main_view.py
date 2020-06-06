@@ -28,7 +28,6 @@ class MainView:
         return self.bot.send_message(chat_id=chat_id, text=msg)
 
 
-
     def help(self, chat_id):
         msg = """Я могу:\n/help - Эта подсказка\n/events - Рассказать, какие события/работы/мероприятия запланировнны по адресу.\n/register - Подписаться на объявления по определенному адресу"""
         return self.bot.send_message(chat_id=chat_id, text=msg)

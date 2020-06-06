@@ -49,11 +49,9 @@ class RegistrationView(MainView):
                                         reply_markup=reply_markup)
 
     def reply_success(self, chat_id, user):
-        # delete menu
-        reply_markup = ReplyKeyboardRemove()
+
         self.bot.send_message(chat_id=chat_id,
-                                 text=f'Ok, запишем: Что будет нового по адресу: {user.address.name} сообщить {user.name}',
-                                 reply_markup=reply_markup)
+                                 text=f'Ok, запишем: Что будет нового по адресу: {user.address.name} сообщить {user.name}')
 
 
     def not_found_user(self, chat_id):

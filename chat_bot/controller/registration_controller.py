@@ -34,24 +34,17 @@ class RegistrationController(MainController):
         self.view.ask_adress(chat_id, user)
         return self.states_dict['WAIT_INPUT']
 
-    @send_typing_action
-    def repeat(self, update, context):
-        self.specify_adress(update, context)
 
     @send_typing_action
     def specify_adress(self, update, context):
-        if hasattr(update, 'callback_query'):
-            chat_id = update.message.chat_id
-            msg = update.message.text
-        else:
-            chat_id = update.callback_query.chat_instance
-            msg = update.message.text
+        chat_id = update.message.chat_id
+        msg = update.message.text
         normal_msg = normalize_adrs(msg)
         addresses = search_address(normal_msg)
 
         if not addresses:
             self.view.not_found(chat_id, msg)
-            return self.states_dict['REPEAT']
+            return self.states_dict['WAIT_INPUT']
 
         # TODO: Addd interaction for alone get address
         # if len(addresses) == 1:
@@ -59,7 +52,7 @@ class RegistrationController(MainController):
 
         if len(addresses) > 20:
             self.view.too_many_found(chat_id, msg, len(addresses))
-            return self.states_dict['REPEAT']
+            return self.states_dict['WAIT_INPUT']
 
         if len(addresses) <= 20:
             self.view.choose_address(chat_id, addresses)
@@ -84,9 +77,7 @@ class RegistrationController(MainController):
 
         registered = register_user(user)
         self.view.reply_success(chat_id, registered)
-
-        # TODO: Remove when realize adress change
-        return ConversationHandler.END
+        return self.states_dict['WAIT_INPUT']
 
     @send_typing_action
     def change_adress(self, update, context):
@@ -102,13 +93,20 @@ class RegistrationController(MainController):
         self.conversation_handler = ConversationHandler(entry_points=[MessageHandler(Filters.text('/register'), self.whait_input),
                                                                       MessageHandler(Filters.text(Buttons.register), self.whait_input)],
                                                    states={
-                                                       self.states_dict["WAIT_INPUT"]: self.default_handlers + [MessageHandler(Filters.text, self.specify_adress)],
-                                                       self.states_dict["REPEAT"]: self.default_handlers + [MessageHandler(Filters.text, self.repeat)],
-                                                       self.states_dict["CHOOSE_OPTIONS"]: self.default_handlers + [CallbackQueryHandler(self.process_options)],
-                                                       self.states_dict["SUCCESS"]: self.default_handlers + [MessageHandler(Filters.text, self.change_adress)]
+                                                       self.states_dict["WAIT_INPUT"]: [MessageHandler(Filters.regex(Buttons.cancel),
+                                                                              callback=self.main_menu),
+                                                                               MessageHandler(Filters.text, self.specify_adress),
+                                                                               CallbackQueryHandler(self.process_options)],
+                                                       self.states_dict["CHOOSE_OPTIONS"]: [
+
+                                                                                MessageHandler(Filters.regex(Buttons.cancel), callback=self.main_menu),
+                                                                                CallbackQueryHandler(self.process_options)],
+
+                                                       # self.states_dict["SUCCESS"]: self.default_handlers + [MessageHandler(Filters.text, self.change_adress)]
                                                    },
                                                     fallbacks=[
                                                         # MessageHandler(Filters.text('/register'), self.whait_input
+                                                        *self.default_handlers
                                                     ],
                                                         allow_reentry=True)
         self.dispatcher.add_handler(self.conversation_handler)

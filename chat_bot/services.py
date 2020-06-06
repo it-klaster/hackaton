@@ -19,9 +19,8 @@ def register_user(data):
     if not user:
         name = f"{data['first_name']}"
         user = User(name=name, address_id=adr.id)
-
     user.telegramm_id = data['telegramm_id']
-
+    user.address_id = adr.id
     session.add(user)
     session.commit()
     return user
